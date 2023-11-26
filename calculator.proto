@@ -1,0 +1,14 @@
+// calculator.proto
+syntax = "proto3";
+
+service Calculator {
+  rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse);
+}
+
+message SquareRootRequest {
+  float number = 1;
+}
+
+message SquareRootResponse {
+  float result = 1;
+}

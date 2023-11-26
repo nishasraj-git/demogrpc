@@ -1,0 +1,20 @@
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy the current directory contents into the container at /usr/src/app
+COPY server.py .
+COPY calculator_pb2.py .
+COPY calculator_pb2_grpc.py .
+COPY calculator.proto .
+
+# Install any needed packages specified in requirements.txt
+RUN pip install grpcio grpcio-tools
+
+# Generate the gRPC files
+RUN python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. calculator.proto
+
+# Run server.py when the container launches
+CMD ["python", "server.py"]
